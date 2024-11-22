@@ -1,0 +1,29 @@
+package model;
+
+public class SubTask extends Task {
+    protected int epicId;
+
+    public int getEpicId() {
+        return epicId;
+    }
+
+    public void setEpicId(int epicId) {
+        this.epicId = epicId;
+    }
+
+    public SubTask(String subTaskName, String subTaskDescription) {
+        super(subTaskName, subTaskDescription);
+        //this.epicId = epicId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "\n\tSubTask{" +
+                "subTaskName='" + getTaskName() + '\'' +
+                ", subTaskDescription='" + getTaskDescription() + '\'' +
+                ", subTaskId=" + getTaskId() +
+                ", subTaskStatus=" + getTaskStatus() +
+                '}';
+    }
+}
