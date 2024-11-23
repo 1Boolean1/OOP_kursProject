@@ -19,11 +19,11 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return "\n\tSubTask{" +
+        return "<br>---->SubTask{" +
                 "subTaskName='" + getTaskName() + '\'' +
                 ", subTaskDescription='" + getTaskDescription() + '\'' +
                 ", subTaskId=" + getTaskId() +
                 ", subTaskStatus=" + getTaskStatus() +
-                '}';
+                "}";
     }
 }

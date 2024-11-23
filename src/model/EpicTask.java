@@ -3,15 +3,21 @@ package model;
 import enums.Status;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class EpicTask extends Task {
+
+    private HashMap<Integer, SubTask> subTasks = new HashMap<>();
 
     public HashMap<Integer, SubTask> getSubTasks() {
         return subTasks;
     }
 
-    private HashMap<Integer, SubTask> subTasks = new HashMap<>();
+    public Collection<SubTask> getSubTasksToPrint() {
+        return subTasks.values();
+    }
 
     public ArrayList<SubTask> getSubTasksArray() {
         return new ArrayList<>(subTasks.values());
@@ -32,13 +38,13 @@ public class EpicTask extends Task {
 
     @Override
     public String toString() {
-        return "EpicTask{" +
+        return "<html>EpicTask{" +
                 "EpicTaskName='" + getTaskName() + '\'' +
                 ", EpicTaskDescription='" + getTaskDescription() + '\'' +
                 ", EpicTaskID=" + getTaskId() +
                 ", EpicTaskStatus=" + getTaskStatus() +
-                ", \n\tSubTasks=" + getSubTasks() +
-                '}';
+                "," + getSubTasksToPrint() +
+                "}</html>";
     }
 
     public void changeEpicTaskStatus() {

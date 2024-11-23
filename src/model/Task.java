@@ -31,12 +31,12 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "<html>Task{" +
                 "taskName='" + taskName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
                 ", taskId=" + taskId +
                 ", taskStatus=" + taskStatus +
-                '}';
+                "}<br></html>";
     }
 
     public String getTaskName() {
