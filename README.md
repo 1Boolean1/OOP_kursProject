@@ -1,2 +1,2 @@
-# java-kanban
-Repository for homework project.
+# 2nd year first semester
+OOP kurs project
