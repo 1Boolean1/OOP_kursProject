@@ -24,6 +24,7 @@ public class MainDialog extends JDialog {
     private JButton addNewEpicTaskButton;
     private JButton deleteAllTasksButton;
     private JButton printAllTasksButton;
+    private JButton updateTaskButton;
 
 
     public MainDialog() {
@@ -99,6 +100,13 @@ public class MainDialog extends JDialog {
             }
         });
 
+        updateTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onUpdateTask();
+            }
+        });
+
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
@@ -117,9 +125,7 @@ public class MainDialog extends JDialog {
         dialog.setVisible(true);
         if (dialog.updateTaskStatus() != 0) {
             taskManager.updateTaskStatus(dialog.updateTaskStatus());
-            listModelTask.removeAllElements();
-            listModelTask.addAll(taskManager.printAllTasks());
-            listTask.setModel(listModelTask);
+            printList();
         }
     }
 
@@ -127,15 +133,11 @@ public class MainDialog extends JDialog {
         AddTaskDialog addTaskDialog = new AddTaskDialog();
         addTaskDialog.setVisible(true);
         if (addTaskDialog.getTask(true).getTaskName().equals("")) {
-            listModelTask.removeAllElements();
-            listModelTask.addAll(taskManager.printAllTasks());
-            listTask.setModel(listModelTask);
+            printList();
         } else {
             tasksNum++;
             taskManager.addNewEpicTask((EpicTask)addTaskDialog.getTask(true));
-            listModelTask.removeAllElements();
-            listModelTask.addAll(taskManager.printAllTasks());
-            listTask.setModel(listModelTask);
+            printList();
         }
     }
 
@@ -143,15 +145,11 @@ public class MainDialog extends JDialog {
         AddTaskDialog addTaskDialog = new AddTaskDialog();
         addTaskDialog.setVisible(true);
         if (addTaskDialog.getTask(false).getTaskName().equals("")) {
-            listModelTask.removeAllElements();
-            listModelTask.addAll(taskManager.printAllTasks());
-            listTask.setModel(listModelTask);
+            printList();
         } else {
             tasksNum++;
             taskManager.addNewTask(addTaskDialog.getTask(false));
-            listModelTask.removeAllElements();
-            listModelTask.addAll(taskManager.printAllTasks());
-            listTask.setModel(listModelTask);
+            printList();
         }
     }
 
@@ -168,9 +166,7 @@ public class MainDialog extends JDialog {
     private void onDeleteAllTasks() {
         listModelTask.removeAllElements();
         taskManager.deleteTasks();
-        listModelTask.removeAllElements();
-        listModelTask.addAll(taskManager.printAllTasks());
-        listTask.setModel(listModelTask);
+        printList();
     }
 
 
@@ -183,9 +179,7 @@ public class MainDialog extends JDialog {
     }
 
     private void printAllTasks() {
-        listModelTask.removeAllElements();
-        listModelTask.addAll(taskManager.printAllTasks());
-        listTask.setModel(listModelTask);
+        printList();
     }
 
     private void addNewSubTask() {
@@ -193,15 +187,23 @@ public class MainDialog extends JDialog {
         dialog.setVisible(true);
 
         if (dialog.addSubTask().getTaskName().equals("")) {
-            listModelTask.removeAllElements();
-            listModelTask.addAll(taskManager.printAllTasks());
-            listTask.setModel(listModelTask);
+            printList();
         } else {
             tasksNum++;
             taskManager.addNewSubTask(dialog.addSubTask(), dialog.getTaskId());
-            listModelTask.removeAllElements();
-            listModelTask.addAll(taskManager.printAllTasks());
-            listTask.setModel(listModelTask);
+            printList();
         }
+    }
+
+    private void onUpdateTask(){
+        UpdateTaskDialog dialog = new UpdateTaskDialog(taskManager);
+        dialog.setVisible(true);
+        printList();
+    }
+
+    private void printList(){
+        listModelTask.removeAllElements();
+        listModelTask.addAll(taskManager.printAllTasks());
+        listTask.setModel(listModelTask);
     }
 }

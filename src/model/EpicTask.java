@@ -5,7 +5,6 @@ import enums.Status;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class EpicTask extends Task {
 
@@ -38,13 +37,12 @@ public class EpicTask extends Task {
 
     @Override
     public String toString() {
-        return "<html>EpicTask{" +
-                "EpicTaskName='" + getTaskName() + '\'' +
-                ", EpicTaskDescription='" + getTaskDescription() + '\'' +
-                ", EpicTaskID=" + getTaskId() +
-                ", EpicTaskStatus=" + getTaskStatus() +
-                "," + getSubTasksToPrint() +
-                "}</html>";
+        return "<html>EpicTaskID: " + getTaskId() +
+                "&emsp &ensp Name: " + getTaskName() +
+                "&emsp &ensp Description: " + getTaskDescription() +
+                "&emsp &ensp Status: " + getTaskStatus() +
+                 getSubTasksToPrint() +
+                "</html>";
     }
 
     public void changeEpicTaskStatus() {

@@ -19,11 +19,9 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return "<br>---->SubTask{" +
-                "subTaskName='" + getTaskName() + '\'' +
-                ", subTaskDescription='" + getTaskDescription() + '\'' +
-                ", subTaskId=" + getTaskId() +
-                ", subTaskStatus=" + getTaskStatus() +
-                "}";
+        return "<br>---->SubTaskId: " + getTaskId() +
+                "&emsp &ensp Name: " + getTaskName() +
+                "&emsp &ensp Description: " + getTaskDescription() +
+                "&emsp &ensp Status: " + getTaskStatus();
     }
 }

@@ -70,44 +70,14 @@ public class DeleteTaskDialog extends JDialog {
                 isNull = false;
             }
             if (!isNull) {
-                label.setText("Задача успешно удалена");
-                textField1.setVisible(false);
-                buttonOK.setVisible(false);
-                Timer timer = new Timer(1000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dispose();
-                    }
-                });
-                timer.setRepeats(false);
-                timer.start();
+                hideAllAndStartTimer("Задача успешно удалена");
                 return id;
             } else {
-                label.setText("Задачи с таким id нет!");
-                textField1.setVisible(false);
-                buttonOK.setVisible(false);
-                Timer timer = new Timer(1000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dispose();
-                    }
-                });
-                timer.setRepeats(false);
-                timer.start();
+                hideAllAndStartTimer("Задачи с таким id нет!");
                 return 0;
             }
         } else {
-            textField1.setVisible(false);
-            label.setText("Неверный ввод!");
-            buttonOK.setVisible(false);
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Неверный ввод!");
             return 0;
         }
     }
@@ -117,5 +87,19 @@ public class DeleteTaskDialog extends JDialog {
         dispose();
     }
 
-
+    private void hideAllAndStartTimer(String setText){
+        setTitle("Delete task");
+        textField1.setVisible(false);
+        label.setText(setText);
+        buttonOK.setVisible(false);
+        getRootPane().setDefaultButton(buttonCancel);
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
 }

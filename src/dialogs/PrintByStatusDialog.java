@@ -14,11 +14,12 @@ public class PrintByStatusDialog extends JDialog {
     private JLabel label;
 
     public PrintByStatusDialog() {
+        setTitle("Print by status");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setBounds(screenSize.width / 3, screenSize.width / 4, screenSize.width / 4, screenSize.height / 4);
+        setBounds(screenSize.width / 3, screenSize.width / 4, screenSize.width / 3, screenSize.height / 4);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -55,17 +56,7 @@ public class PrintByStatusDialog extends JDialog {
             return status;
         }
         else {
-            label.setText("Неверный ввод");
-            textField1.setVisible(false);
-            buttonOK.setVisible(false);
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Неверный ввод");
             return null;
         }
     }
@@ -73,5 +64,20 @@ public class PrintByStatusDialog extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    private void hideAllAndStartTimer(String setText){
+        label.setText(setText);
+        textField1.setVisible(false);
+        buttonOK.setVisible(false);
+        getRootPane().setDefaultButton(buttonCancel);
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 }

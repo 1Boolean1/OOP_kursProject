@@ -16,13 +16,14 @@ public class UpdateStatusDialog extends JDialog {
     private TaskManager taskManager;
 
     public UpdateStatusDialog(TaskManager taskManager) {
+        setTitle("Update status");
         this.taskManager = taskManager;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        setBounds(screenSize.width / 3, screenSize.width / 4, screenSize.width / 4, screenSize.height / 4);
+        setBounds(screenSize.width / 3, screenSize.width / 4, screenSize.width / 3, screenSize.height / 4);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -63,49 +64,34 @@ public class UpdateStatusDialog extends JDialog {
         }
         if (!textFieldTaskStatus.getText().isEmpty() && isDigit && taskManager.getEpicTask(id) == null) {
             id = Integer.parseInt(textFieldTaskStatus.getText());
-            textFieldTaskStatus.setVisible(false);
-            labelTaskStatus.setText("Статус задачи успешно обновлен!");
-            buttonOK.setVisible(false);
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Статус задачи успешно обновлен!");
             return id;
         } else if (!textFieldTaskStatus.getText().isEmpty() && isDigit && taskManager.getEpicTask(id) != null) {
-            textFieldTaskStatus.setVisible(false);
-            labelTaskStatus.setText("Нельзя обновлять статус EpicTask!");
-            buttonOK.setVisible(false);
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Нельзя обновлять статус EpicTask!");
             return 0;
         } else {
-            textFieldTaskStatus.setVisible(false);
-            labelTaskStatus.setText("Неверный ввод!");
-            buttonOK.setVisible(false);
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Неверный ввод!");
             return 0;
         }
     }
 
     private void onCancel() {
         dispose();
+    }
+
+    private void hideAllAndStartTimer(String setText){
+        textFieldTaskStatus.setVisible(false);
+        labelTaskStatus.setText(setText);
+        buttonOK.setVisible(false);
+        getRootPane().setDefaultButton(buttonCancel);
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
 }

@@ -19,6 +19,7 @@ public class AddTaskDialog extends JDialog {
     private JLabel labelAddTaskDescription;
 
     public AddTaskDialog() {
+        setTitle("Add task");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setContentPane(contentPane);
         setModal(true);
@@ -56,37 +57,11 @@ public class AddTaskDialog extends JDialog {
 
     public void addTask() {
         if(textFieldAddTaskName.getText().isEmpty()){
-            taskName = textFieldAddTaskName.getText();
-            taskDescription = textFieldAddTaskDescription.getText();
-            textFieldAddTaskDescription.setVisible(false);
-            textFieldAddTaskName.setVisible(false);
-            labelAddTaskDescription.setText("Введите имя задачи!");
-            labelAddTaskName.setVisible(false);
-            buttonOK.setVisible(false);
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Введите имя задачи!");
         } else {
             taskName = textFieldAddTaskName.getText();
             taskDescription = textFieldAddTaskDescription.getText();
-            textFieldAddTaskDescription.setVisible(false);
-            textFieldAddTaskName.setVisible(false);
-            labelAddTaskDescription.setText("Задача " + taskName + " успешно добавлена!");
-            labelAddTaskName.setVisible(false);
-            buttonOK.setVisible(false);
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Задача " + taskName + " успешно добавлена!");
         }
     }
 
@@ -105,6 +80,23 @@ public class AddTaskDialog extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    private void hideAllAndStartTimer(String setText){
+        textFieldAddTaskDescription.setVisible(false);
+        textFieldAddTaskName.setVisible(false);
+        labelAddTaskDescription.setText(setText);
+        labelAddTaskName.setVisible(false);
+        buttonOK.setVisible(false);
+        getRootPane().setDefaultButton(buttonCancel);
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
 }

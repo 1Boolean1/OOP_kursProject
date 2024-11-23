@@ -28,6 +28,7 @@ public class AddSubTaskDialog extends JDialog {
     private int taskId;
 
     public AddSubTaskDialog(TaskManager taskManager) {
+        setTitle("Add sub task");
         this.taskManager = taskManager;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setContentPane(contentPane);
@@ -75,78 +76,22 @@ public class AddSubTaskDialog extends JDialog {
         if (isDigit) {
             taskId = Integer.parseInt(textFieldId.getText());
             if (taskManager.getEpicTask(taskId) == null) {
-                textFieldDescription.setVisible(false);
-                textFieldName.setVisible(false);
-                textFieldId.setVisible(false);
-                labelId.setVisible(false);
-                labelDescription.setVisible(false);
-                buttonOK.setVisible(false);
-                labelName.setText("EpicTask с таким id не существует!");
-                Timer timer = new Timer(1000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dispose();
-                    }
-                });
-                timer.setRepeats(false);
-                timer.start();
+                hideAllAndStartTimer("EpicTask с таким id не существует!");
                 return null;
             } else {
                 if (textFieldName.getText().isEmpty()) {
-                    textFieldDescription.setVisible(false);
-                    textFieldName.setVisible(false);
-                    textFieldId.setVisible(false);
-                    labelId.setVisible(false);
-                    labelDescription.setVisible(false);
-                    buttonOK.setVisible(false);
-                    labelName.setText("Введите имя задачи!");
-                    Timer timer = new Timer(1000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            dispose();
-                        }
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
+                    hideAllAndStartTimer("Введите имя задачи!");
                     return null;
                 } else {
                     taskName = textFieldName.getText();
                     taskDescription = textFieldDescription.getText();
-                    textFieldDescription.setVisible(false);
-                    textFieldName.setVisible(false);
-                    textFieldId.setVisible(false);
-                    labelId.setVisible(false);
-                    labelDescription.setVisible(false);
-                    buttonOK.setVisible(false);
-                    labelName.setText("Подзадача " + taskName + " успешно добавлена");
-                    Timer timer = new Timer(1000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            dispose();
-                        }
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
+                    hideAllAndStartTimer("Подзадача " + taskName + " успешно добавлена");
                     SubTask subTask = new SubTask(taskName, taskDescription);
                     return subTask;
                 }
             }
         } else {
-            textFieldDescription.setVisible(false);
-            textFieldName.setVisible(false);
-            textFieldId.setVisible(false);
-            labelId.setVisible(false);
-            labelDescription.setVisible(false);
-            buttonOK.setVisible(false);
-            labelName.setText("Неверный ввод");
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            hideAllAndStartTimer("Неверный ввод");
             return null;
         }
     }
@@ -154,5 +99,24 @@ public class AddSubTaskDialog extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    private void hideAllAndStartTimer(String setText){
+        textFieldDescription.setVisible(false);
+        textFieldName.setVisible(false);
+        textFieldId.setVisible(false);
+        labelId.setVisible(false);
+        labelDescription.setVisible(false);
+        buttonOK.setVisible(false);
+        labelName.setText(setText);
+        getRootPane().setDefaultButton(buttonCancel);
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 }
