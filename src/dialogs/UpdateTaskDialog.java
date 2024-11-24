@@ -16,7 +16,7 @@ public class UpdateTaskDialog extends JDialog {
     private JTextField textFieldId;
     private JTextField textFieldName;
     private JTextField textFieldDescription;
-    private TaskManager taskManager;
+    private final TaskManager taskManager;
 
     public UpdateTaskDialog(TaskManager taskManager) {
         setTitle("Update task");
@@ -29,17 +29,9 @@ public class UpdateTaskDialog extends JDialog {
         setBounds(screenSize.width / 3, screenSize.width / 4, screenSize.width / 4, screenSize.height / 3);
 
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -50,15 +42,11 @@ public class UpdateTaskDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
-        boolean isDigit = false;
+        boolean isDigit;
         try {
             Integer.parseInt(textFieldId.getText());
             isDigit = true;
@@ -67,10 +55,10 @@ public class UpdateTaskDialog extends JDialog {
         }
         if (isDigit) {
             if (taskManager.getTask(Integer.parseInt(textFieldId.getText())) != null) {
-                if (textFieldDescription.getText().equals("")) {
+                if (textFieldDescription.getText().isEmpty()) {
                     taskManager.getTask(Integer.parseInt(textFieldId.getText())).
                             setTaskName(textFieldName.getText());
-                } else if (textFieldName.getText().equals("")) {
+                } else if (textFieldName.getText().isEmpty()) {
                     taskManager.getTask(Integer.parseInt(textFieldId.getText())).
                             setTaskDescription(textFieldDescription.getText());
                 } else {
@@ -81,10 +69,10 @@ public class UpdateTaskDialog extends JDialog {
                 }
                 hideAndStartTimer("Задача обновлена");
             } else if (taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())) != null) {
-                if (textFieldDescription.getText().equals("")) {
+                if (textFieldDescription.getText().isEmpty()) {
                     taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
                             setTaskName(textFieldName.getText());
-                } else if (textFieldName.getText().equals("")) {
+                } else if (textFieldName.getText().isEmpty()) {
                     taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
                             setTaskDescription(textFieldDescription.getText());
                 } else {
@@ -95,10 +83,10 @@ public class UpdateTaskDialog extends JDialog {
                 }
                 hideAndStartTimer("Задача обновлена");
             } else if (taskManager.getSubTask(Integer.parseInt(textFieldId.getText())) != null) {
-                if (textFieldDescription.getText().equals("")) {
+                if (textFieldDescription.getText().isEmpty()) {
                     taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
                             setTaskName(textFieldName.getText());
-                } else if (textFieldName.getText().equals("")) {
+                } else if (textFieldName.getText().isEmpty()) {
                     taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
                             setTaskDescription(textFieldDescription.getText());
                 } else {
@@ -130,12 +118,7 @@ public class UpdateTaskDialog extends JDialog {
         buttonOK.setVisible(false);
         idTask.setText(setText);
         getRootPane().setDefaultButton(buttonCancel);
-        Timer timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        Timer timer = new Timer(1000, e -> dispose());
         timer.setRepeats(false);
         timer.start();
     }

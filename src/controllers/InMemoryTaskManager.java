@@ -5,12 +5,13 @@ import model.SubTask;
 import model.Task;
 import enums.Status;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private int numOfTasks = 0;

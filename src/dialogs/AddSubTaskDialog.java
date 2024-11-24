@@ -17,9 +17,7 @@ public class AddSubTaskDialog extends JDialog {
     private JTextField textFieldName;
     private JTextField textFieldDescription;
     private JTextField textFieldId;
-    private String taskName;
-    private String taskDescription;
-    private TaskManager taskManager;
+    private final TaskManager taskManager;
 
     public int getTaskId() {
         return taskId;
@@ -37,17 +35,9 @@ public class AddSubTaskDialog extends JDialog {
 
         setBounds(screenSize.width / 3, screenSize.height / 3, screenSize.width / 3, screenSize.height / 3);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addSubTask();
-            }
-        });
+        buttonOK.addActionListener(e -> addSubTask());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -58,11 +48,7 @@ public class AddSubTaskDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     public SubTask addSubTask() {
@@ -83,11 +69,10 @@ public class AddSubTaskDialog extends JDialog {
                     hideAllAndStartTimer("Введите имя задачи!");
                     return null;
                 } else {
-                    taskName = textFieldName.getText();
-                    taskDescription = textFieldDescription.getText();
+                    String taskName = textFieldName.getText();
+                    String taskDescription = textFieldDescription.getText();
                     hideAllAndStartTimer("Подзадача " + taskName + " успешно добавлена");
-                    SubTask subTask = new SubTask(taskName, taskDescription);
-                    return subTask;
+                    return new SubTask(taskName, taskDescription);
                 }
             }
         } else {
@@ -110,12 +95,7 @@ public class AddSubTaskDialog extends JDialog {
         buttonOK.setVisible(false);
         labelName.setText(setText);
         getRootPane().setDefaultButton(buttonCancel);
-        Timer timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        Timer timer = new Timer(1000, e -> dispose());
         timer.setRepeats(false);
         timer.start();
     }

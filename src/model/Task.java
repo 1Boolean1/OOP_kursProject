@@ -2,9 +2,11 @@ package model;
 
 import enums.Status;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Task implements Serializable{
+    @Serial
     private static final long serialVersionUID = 1L;
     private String taskName;
     private String taskDescription;

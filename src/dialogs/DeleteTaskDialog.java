@@ -7,13 +7,12 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class DeleteTaskDialog extends JDialog {
-    private int id;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField textField1;
     private JLabel label;
-    private TaskManager taskManager;
+    private final TaskManager taskManager;
 
     public DeleteTaskDialog(TaskManager taskManager) {
         setTitle("Delete task");
@@ -24,17 +23,9 @@ public class DeleteTaskDialog extends JDialog {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(screenSize.width / 3, screenSize.height / 3, screenSize.width / 3, screenSize.height / 3);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                deleteTask();
-            }
-        });
+        buttonOK.addActionListener(e -> deleteTask());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -45,15 +36,11 @@ public class DeleteTaskDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     public int deleteTask() {
-        boolean isDigit = false;
+        boolean isDigit;
         try {
             Integer.parseInt(textField1.getText());
             isDigit = true;
@@ -61,7 +48,7 @@ public class DeleteTaskDialog extends JDialog {
             isDigit = false;
         }
         if (!textField1.getText().isEmpty() && isDigit) {
-            id = Integer.parseInt(textField1.getText());
+            int id = Integer.parseInt(textField1.getText());
             boolean isNull = true;
             if (taskManager.getTask(id) != null) {
                 isNull = false;
@@ -93,12 +80,7 @@ public class DeleteTaskDialog extends JDialog {
         label.setText(setText);
         buttonOK.setVisible(false);
         getRootPane().setDefaultButton(buttonCancel);
-        Timer timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        Timer timer = new Timer(1000, e -> dispose());
         timer.setRepeats(false);
         timer.start();
     }

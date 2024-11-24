@@ -10,14 +10,13 @@ import java.awt.event.*;
 
 public class MainDialog extends JDialog {
     TaskManager taskManager;
-    private int tasksNum = 0;
     private JPanel contentPane;
     private JButton exitButton;
     private JButton updateTaskStatusButton;
     private JButton deleteTaskButton;
     private JButton addNewTaskButton;
     private JButton addNewSubTaskButton;
-    private DefaultListModel<Task> listModelTask = new DefaultListModel<>();
+    private final DefaultListModel<Task> listModelTask = new DefaultListModel<>();
     private JList<Task> listTask;
     private JButton printTasksByStatusButton;
     private JButton addNewEpicTaskButton;
@@ -33,87 +32,34 @@ public class MainDialog extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(addNewTaskButton);
-        setBounds(screenSize.width / 4, screenSize.height / 4, screenSize.width / 2 + 100, screenSize.height / 2 + 100);
+        setBounds(screenSize.width / 4, screenSize.height / 4,
+                screenSize.width / 2 + 100, screenSize.height / 2 + 100);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onExit();
-            }
-        });
+        exitButton.addActionListener(e -> onExit());
 
-        addNewTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onAddTask();
-            }
-        });
+        addNewTaskButton.addActionListener(e -> onAddTask());
 
-        addNewEpicTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onAddEpicTask();
-            }
-        });
+        addNewEpicTaskButton.addActionListener(e -> onAddEpicTask());
 
-        printTasksByStatusButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                printTasksByStatus();
-            }
-        });
+        printTasksByStatusButton.addActionListener(e -> printTasksByStatus());
 
-        deleteTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onDeleteTask();
-            }
-        });
+        deleteTaskButton.addActionListener(e -> onDeleteTask());
 
-        deleteAllTasksButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onDeleteAllTasks();
-            }
-        });
+        deleteAllTasksButton.addActionListener(e -> onDeleteAllTasks());
 
-        updateTaskStatusButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onUpdateTaskStatus();
-            }
-        });
+        updateTaskStatusButton.addActionListener(e -> onUpdateTaskStatus());
 
-        printAllTasksButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                printAllTasks();
-            }
-        });
+        printAllTasksButton.addActionListener(e -> printAllTasks());
 
-        addNewSubTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addNewSubTask();
-            }
-        });
+        addNewSubTaskButton.addActionListener(e -> addNewSubTask());
 
-        updateTaskButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onUpdateTask();
-            }
-        });
+        updateTaskButton.addActionListener(e -> onUpdateTask());
 
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onExit();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onExit(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         printList();
     }
 
@@ -133,10 +79,9 @@ public class MainDialog extends JDialog {
     private void onAddEpicTask() {
         AddTaskDialog addTaskDialog = new AddTaskDialog();
         addTaskDialog.setVisible(true);
-        if (addTaskDialog.getTask(true).getTaskName().equals("")) {
+        if (addTaskDialog.getTask(true).getTaskName().isEmpty()) {
             printList();
         } else {
-            tasksNum++;
             taskManager.addNewEpicTask((EpicTask)addTaskDialog.getTask(true));
             printList();
         }
@@ -145,10 +90,9 @@ public class MainDialog extends JDialog {
     private void onAddTask() {
         AddTaskDialog addTaskDialog = new AddTaskDialog();
         addTaskDialog.setVisible(true);
-        if (addTaskDialog.getTask(false).getTaskName().equals("")) {
+        if (addTaskDialog.getTask(false).getTaskName().isEmpty()) {
             printList();
         } else {
-            tasksNum++;
             taskManager.addNewTask(addTaskDialog.getTask(false));
             printList();
         }
@@ -190,10 +134,9 @@ public class MainDialog extends JDialog {
         AddSubTaskDialog dialog = new AddSubTaskDialog(taskManager);
         dialog.setVisible(true);
 
-        if (dialog.addSubTask().getTaskName().equals("")) {
+        if (dialog.addSubTask().getTaskName().isEmpty()) {
             printList();
         } else {
-            tasksNum++;
             taskManager.addNewSubTask(dialog.addSubTask(), dialog.getTaskId());
             printList();
         }

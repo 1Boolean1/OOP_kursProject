@@ -2,15 +2,17 @@ package model;
 
 import enums.Status;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 public class EpicTask extends Task implements Serializable{
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private HashMap<Integer, SubTask> subTasks = new HashMap<>();
+    private final HashMap<Integer, SubTask> subTasks = new HashMap<>();
 
     public HashMap<Integer, SubTask> getSubTasks() {
         return subTasks;

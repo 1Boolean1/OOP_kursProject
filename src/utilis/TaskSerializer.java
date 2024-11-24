@@ -21,7 +21,7 @@ public class TaskSerializer {
             TaskManager taskManager = (TaskManager) ois.readObject();
 
             return taskManager;
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
