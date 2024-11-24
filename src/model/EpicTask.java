@@ -2,11 +2,13 @@ package model;
 
 import enums.Status;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class EpicTask extends Task {
+public class EpicTask extends Task implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private HashMap<Integer, SubTask> subTasks = new HashMap<>();
 
@@ -67,24 +69,4 @@ public class EpicTask extends Task {
             }
         }
     }
-
-    /*public void changeSubTaskStatus(int subTaskId) {
-        if (getSubTasks().get(subTaskId).getTaskStatus().equals(Status.NEW)) {
-            getSubTasks().get(subTaskId).setTaskStatus(Status.IN_PROGRESS);
-            if (getTaskStatus().equals(Status.NEW)) {
-                setTaskStatus(Status.IN_PROGRESS);
-            }
-        } else if (getSubTasks().get(subTaskId).getTaskStatus().equals(Status.IN_PROGRESS)) {
-            getSubTasks().get(subTaskId).setTaskStatus(Status.DONE);
-            int numOfSubTasksWithDone = 0;
-            for (SubTask subTask : getSubTasks().values()) {
-                if (subTask.getTaskStatus().equals(Status.DONE)) {
-                    numOfSubTasksWithDone++;
-                }
-            }
-            if (numOfSubTasksWithDone == getSubTasksArray().size()) {
-                setTaskStatus(Status.DONE);
-            }
-        }
-    }*/
 }

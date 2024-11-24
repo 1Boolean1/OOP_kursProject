@@ -5,15 +5,18 @@ import model.SubTask;
 import model.Task;
 import enums.Status;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InMemoryTaskManager implements TaskManager {
+public class InMemoryTaskManager implements TaskManager, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int numOfTasks = 0;
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, EpicTask> epicTasks = new HashMap<>();
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    private transient HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public List<Task> getHistory() {

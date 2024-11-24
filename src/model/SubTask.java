@@ -1,6 +1,9 @@
 package model;
 
-public class SubTask extends Task {
+import java.io.Serializable;
+
+public class SubTask extends Task implements Serializable {
+    private static final long serialVersionUID = 1L;
     protected int epicId;
 
     public int getEpicId() {

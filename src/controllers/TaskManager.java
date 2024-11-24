@@ -8,7 +8,7 @@ import model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface TaskManager {
+public interface TaskManager{
     int addNewTask(Task task);
 
     int addNewEpicTask(EpicTask epicTask);

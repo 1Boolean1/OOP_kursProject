@@ -2,10 +2,12 @@ package controllers;
 
 import model.Task;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager, Serializable {
+    private static final long serialVersionUID = 1L;
     private final List<Task> tasksHistory = new ArrayList<>();
 
     @Override

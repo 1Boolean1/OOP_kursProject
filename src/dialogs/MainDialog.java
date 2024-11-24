@@ -1,6 +1,5 @@
 package dialogs;
 
-import controllers.InMemoryTaskManager;
 import controllers.TaskManager;
 import model.EpicTask;
 import model.Task;
@@ -10,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainDialog extends JDialog {
-    private TaskManager taskManager = new InMemoryTaskManager();
+    TaskManager taskManager;
     private int tasksNum = 0;
     private JPanel contentPane;
     private JButton exitButton;
@@ -27,7 +26,8 @@ public class MainDialog extends JDialog {
     private JButton updateTaskButton;
 
 
-    public MainDialog() {
+    public MainDialog(TaskManager taskManager) {
+        this.taskManager = taskManager;
         setTitle("TaskManager");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setContentPane(contentPane);
@@ -114,6 +114,7 @@ public class MainDialog extends JDialog {
                 onExit();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        printList();
     }
 
     private void onExit() {
