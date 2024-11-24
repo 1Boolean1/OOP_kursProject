@@ -162,6 +162,7 @@ public class MainDialog extends JDialog {
         listModelTask.removeElement(taskManager.getSubTask(dialog.deleteTask()));
         taskManager.deleteById(dialog.deleteTask());
         listTask.setModel(listModelTask);
+        printList();
     }
 
     private void onDeleteAllTasks() {
