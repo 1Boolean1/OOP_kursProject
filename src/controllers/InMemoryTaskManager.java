@@ -16,12 +16,7 @@ public class InMemoryTaskManager implements TaskManager, Serializable {
     private int numOfTasks = 0;
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, EpicTask> epicTasks = new HashMap<>();
-    private transient HistoryManager historyManager = Managers.getDefaultHistory();
 
-    @Override
-    public List<Task> getHistory() {
-        return historyManager.getHistory();
-    }
 
     @Override
     public int addNewTask(Task task) {
@@ -135,13 +130,11 @@ public class InMemoryTaskManager implements TaskManager, Serializable {
 
     @Override
     public Task getTask(Integer taskId) {
-        historyManager.add(tasks.get(taskId));
         return tasks.getOrDefault(taskId, null);
     }
 
     @Override
     public Task getEpicTask(Integer taskId) {
-        Managers.getDefaultHistory().add(epicTasks.get(taskId));
         return epicTasks.getOrDefault(taskId, null);
     }
 
@@ -149,7 +142,6 @@ public class InMemoryTaskManager implements TaskManager, Serializable {
     public Task getSubTask(Integer taskId) {
         for (Integer key : epicTasks.keySet()) {
             if (epicTasks.get(key).getSubTasks().containsKey(taskId)) {
-                Managers.getDefaultHistory().add(epicTasks.get(key).getSubTasks().get(taskId));
                 return epicTasks.get(key).getSubTasks().get(taskId);
             }
         }

@@ -10,7 +10,6 @@ public class Main {
         mainDialog.setVisible(true);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             TaskSerializer.saveTaskManager(taskManager);
-            System.out.println("TaskManager saved before shutdown.");
         }));
     }
 }

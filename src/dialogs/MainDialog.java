@@ -167,6 +167,8 @@ public class MainDialog extends JDialog {
     private void onDeleteAllTasks() {
         listModelTask.removeAllElements();
         taskManager.deleteTasks();
+        taskManager.deleteEpics();
+        taskManager.deleteSubTasks();
         printList();
     }
 

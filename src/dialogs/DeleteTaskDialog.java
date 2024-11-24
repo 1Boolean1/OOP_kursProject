@@ -13,10 +13,10 @@ public class DeleteTaskDialog extends JDialog {
     private JButton buttonCancel;
     private JTextField textField1;
     private JLabel label;
-    private boolean isNull = true;
     private TaskManager taskManager;
 
     public DeleteTaskDialog(TaskManager taskManager) {
+        setTitle("Delete task");
         this.taskManager = taskManager;
         setContentPane(contentPane);
         setModal(true);
@@ -62,6 +62,7 @@ public class DeleteTaskDialog extends JDialog {
         }
         if (!textField1.getText().isEmpty() && isDigit) {
             id = Integer.parseInt(textField1.getText());
+            boolean isNull = true;
             if (taskManager.getTask(id) != null) {
                 isNull = false;
             } else if (taskManager.getEpicTask(id) != null) {
@@ -88,7 +89,6 @@ public class DeleteTaskDialog extends JDialog {
     }
 
     private void hideAllAndStartTimer(String setText){
-        setTitle("Delete task");
         textField1.setVisible(false);
         label.setText(setText);
         buttonOK.setVisible(false);
