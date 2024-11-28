@@ -24,7 +24,6 @@ public class InMemoryTaskManager implements TaskManager, Serializable {
         final int id = ++numOfTasks;
         task.setTaskId(id);
         tasks.put(id, task);
-        setNumOfTasks(id);
         return id;
     }
 
@@ -33,7 +32,6 @@ public class InMemoryTaskManager implements TaskManager, Serializable {
         final int id = ++numOfTasks;
         epicTask.setTaskId(id);
         epicTasks.put(id, epicTask);
-        setNumOfTasks(id);
         return id;
     }
 
@@ -103,11 +101,6 @@ public class InMemoryTaskManager implements TaskManager, Serializable {
         for (Integer key : epicTasks.keySet()) {
             if (epicTasks.get(key).getTaskStatus().equals(status)) {
                 tasksToPrint.add(epicTasks.get(key));
-                for (SubTask subTask : epicTasks.get(key).getSubTasksArray()) {
-                    if (subTask.getTaskStatus().equals(status)) {
-                        tasksToPrint.add(subTask);
-                    }
-                }
             }
         }
         return tasksToPrint;
@@ -149,53 +142,32 @@ public class InMemoryTaskManager implements TaskManager, Serializable {
         return null;
     }
 
-    @Override
     public ArrayList<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 
-    @Override
-    public ArrayList<SubTask> getSubTasksById(Integer subTaskId) {
-        return new ArrayList<>(epicTasks.get(subTaskId).getSubTasksArray());
-    }
-
-    @Override
-    public ArrayList<SubTask> getSubTasks() {
-        ArrayList<SubTask> subTasks = new ArrayList<>();
-        for (EpicTask epicTask : epicTasks.values()) {
-            subTasks.addAll(epicTask.getSubTasksArray());
-        }
-        return subTasks;
-    }
-
-    @Override
     public ArrayList<Task> getEpicTasks() {
         return new ArrayList<>(epicTasks.values());
     }
 
-    public int getNumOfTasks() {
-        return numOfTasks;
-    }
 
-    public void setNumOfTasks(int numOfTasks) {
-        this.numOfTasks = numOfTasks;
-    }
-
-
-    @Override
-    public void deleteTasks() {
+    private void deleteTasks() {
         tasks.clear();
     }
 
-    @Override
-    public void deleteSubTasks() {
+    private void deleteSubTasks() {
         for (EpicTask epicTask : epicTasks.values()) {
             epicTask.getSubTasks().clear();
         }
     }
 
-    @Override
-    public void deleteEpics() {
+    private void deleteEpics() {
         epicTasks.clear();
+    }
+
+    public void deleteAllTasks(){
+        deleteTasks();
+        deleteEpics();
+        deleteSubTasks();
     }
 }

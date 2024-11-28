@@ -51,7 +51,7 @@ public class AddSubTaskDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public SubTask addSubTask() {
+    private boolean isDigit() {
         boolean isDigit;
         try {
             Integer.parseInt(textFieldId.getText());
@@ -59,34 +59,44 @@ public class AddSubTaskDialog extends JDialog {
         } catch (NumberFormatException e) {
             isDigit = false;
         }
-        if (isDigit) {
+        return isDigit;
+    }
+
+    public SubTask addSubTask() {
+        if (checkInput()) {
+            if (textFieldName.getText().isEmpty()) {
+                hideAllAndStartTimer("Введите имя задачи!");
+                return null;
+            } else {
+                String taskName = textFieldName.getText();
+                String taskDescription = textFieldDescription.getText();
+                hideAllAndStartTimer("Подзадача " + taskName + " успешно добавлена");
+                return new SubTask(taskName, taskDescription);
+            }
+        }
+        return null;
+    }
+
+    public boolean checkInput() {
+        if (isDigit()) {
             taskId = Integer.parseInt(textFieldId.getText());
             if (taskManager.getEpicTask(taskId) == null) {
                 hideAllAndStartTimer("EpicTask с таким id не существует!");
-                return null;
+                return false;
             } else {
-                if (textFieldName.getText().isEmpty()) {
-                    hideAllAndStartTimer("Введите имя задачи!");
-                    return null;
-                } else {
-                    String taskName = textFieldName.getText();
-                    String taskDescription = textFieldDescription.getText();
-                    hideAllAndStartTimer("Подзадача " + taskName + " успешно добавлена");
-                    return new SubTask(taskName, taskDescription);
-                }
+                return true;
             }
         } else {
             hideAllAndStartTimer("Неверный ввод");
-            return null;
+            return false;
         }
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
-    private void hideAllAndStartTimer(String setText){
+    private void hideAllAndStartTimer(String setText) {
         textFieldDescription.setVisible(false);
         textFieldName.setVisible(false);
         textFieldId.setVisible(false);

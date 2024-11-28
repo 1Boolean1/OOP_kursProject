@@ -45,7 +45,7 @@ public class UpdateTaskDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onOK() {
+    public boolean isDigit(){
         boolean isDigit;
         try {
             Integer.parseInt(textFieldId.getText());
@@ -53,49 +53,65 @@ public class UpdateTaskDialog extends JDialog {
         } catch (NumberFormatException e) {
             isDigit = false;
         }
-        if (isDigit) {
+        return isDigit;
+    }
+
+    public void updateTask(){
+        if (textFieldDescription.getText().isEmpty()) {
+            taskManager.getTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskName(textFieldName.getText());
+        } else if (textFieldName.getText().isEmpty()) {
+            taskManager.getTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskDescription(textFieldDescription.getText());
+        } else {
+            taskManager.getTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskDescription(textFieldDescription.getText());
+            taskManager.getTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskName(textFieldName.getText());
+        }
+        hideAndStartTimer("Задача обновлена");
+    }
+
+    public void updateEpicTask(){
+        if (textFieldDescription.getText().isEmpty()) {
+            taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskName(textFieldName.getText());
+        } else if (textFieldName.getText().isEmpty()) {
+            taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskDescription(textFieldDescription.getText());
+        } else {
+            taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskDescription(textFieldDescription.getText());
+            taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskName(textFieldName.getText());
+        }
+        hideAndStartTimer("Задача обновлена");
+    }
+
+    public void updateSubTask(){
+        if (textFieldDescription.getText().isEmpty()) {
+            taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskName(textFieldName.getText());
+        } else if (textFieldName.getText().isEmpty()) {
+            taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskDescription(textFieldDescription.getText());
+        } else {
+            taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskDescription(textFieldDescription.getText());
+            taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
+                    setTaskName(textFieldName.getText());
+        }
+        hideAndStartTimer("Задача обновлена");
+    }
+
+    private void onOK() {
+        if (isDigit()) {
             if (taskManager.getTask(Integer.parseInt(textFieldId.getText())) != null) {
-                if (textFieldDescription.getText().isEmpty()) {
-                    taskManager.getTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskName(textFieldName.getText());
-                } else if (textFieldName.getText().isEmpty()) {
-                    taskManager.getTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskDescription(textFieldDescription.getText());
-                } else {
-                    taskManager.getTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskDescription(textFieldDescription.getText());
-                    taskManager.getTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskName(textFieldName.getText());
-                }
-                hideAndStartTimer("Задача обновлена");
+                updateTask();
             } else if (taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())) != null) {
-                if (textFieldDescription.getText().isEmpty()) {
-                    taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskName(textFieldName.getText());
-                } else if (textFieldName.getText().isEmpty()) {
-                    taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskDescription(textFieldDescription.getText());
-                } else {
-                    taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskDescription(textFieldDescription.getText());
-                    taskManager.getEpicTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskName(textFieldName.getText());
-                }
-                hideAndStartTimer("Задача обновлена");
+                updateEpicTask();
             } else if (taskManager.getSubTask(Integer.parseInt(textFieldId.getText())) != null) {
-                if (textFieldDescription.getText().isEmpty()) {
-                    taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskName(textFieldName.getText());
-                } else if (textFieldName.getText().isEmpty()) {
-                    taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskDescription(textFieldDescription.getText());
-                } else {
-                    taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskDescription(textFieldDescription.getText());
-                    taskManager.getSubTask(Integer.parseInt(textFieldId.getText())).
-                            setTaskName(textFieldName.getText());
-                }
-                hideAndStartTimer("Задача обновлена");
+                updateSubTask();
             } else {
                 hideAndStartTimer("Задачи с таким id нет!");
             }
@@ -105,7 +121,6 @@ public class UpdateTaskDialog extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 

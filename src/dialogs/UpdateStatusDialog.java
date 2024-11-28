@@ -41,7 +41,7 @@ public class UpdateStatusDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public int updateTaskStatus() {
+    private boolean isDigit(){
         boolean isDigit;
         try {
             Integer.parseInt(textFieldTaskStatus.getText());
@@ -50,11 +50,17 @@ public class UpdateStatusDialog extends JDialog {
         } catch (NumberFormatException e) {
             isDigit = false;
         }
-        if (!textFieldTaskStatus.getText().isEmpty() && isDigit && taskManager.getEpicTask(id) == null) {
+        return isDigit;
+    }
+
+    public int updateTaskStatus() {
+        if (!textFieldTaskStatus.getText().isEmpty() && isDigit()
+                && taskManager.getEpicTask(id) == null) {
             id = Integer.parseInt(textFieldTaskStatus.getText());
             hideAllAndStartTimer("Статус задачи успешно обновлен!");
             return id;
-        } else if (!textFieldTaskStatus.getText().isEmpty() && isDigit && taskManager.getEpicTask(id) != null) {
+        } else if (!textFieldTaskStatus.getText().isEmpty()
+                && isDigit() && taskManager.getEpicTask(id) != null) {
             hideAllAndStartTimer("Нельзя обновлять статус EpicTask!");
             return 0;
         } else {

@@ -39,7 +39,7 @@ public class DeleteTaskDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public int deleteTask() {
+    private boolean isDigit(){
         boolean isDigit;
         try {
             Integer.parseInt(textField1.getText());
@@ -47,17 +47,26 @@ public class DeleteTaskDialog extends JDialog {
         } catch (NumberFormatException e) {
             isDigit = false;
         }
-        if (!textField1.getText().isEmpty() && isDigit) {
+        return isDigit;
+    }
+
+    private boolean checkForNull(){
+        boolean isNull = true;
+        int id = Integer.parseInt(textField1.getText());
+        if (taskManager.getTask(id) != null) {
+            isNull = false;
+        } else if (taskManager.getEpicTask(id) != null) {
+            isNull = false;
+        } else if (taskManager.getSubTask(id) != null) {
+            isNull = false;
+        }
+        return isNull;
+    }
+
+    public int deleteTask() {
+        if (!textField1.getText().isEmpty() && isDigit()) {
             int id = Integer.parseInt(textField1.getText());
-            boolean isNull = true;
-            if (taskManager.getTask(id) != null) {
-                isNull = false;
-            } else if (taskManager.getEpicTask(id) != null) {
-                isNull = false;
-            } else if (taskManager.getSubTask(id) != null) {
-                isNull = false;
-            }
-            if (!isNull) {
+            if (!checkForNull()) {
                 hideAllAndStartTimer("Задача успешно удалена");
                 return id;
             } else {

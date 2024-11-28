@@ -20,21 +20,7 @@ public interface TaskManager{
 
     void deleteById(Integer id);
 
-    void deleteTasks();
-
-    void deleteSubTasks();
-
-    void deleteEpics();
-
     void updateTaskStatus(Integer taskId);
-
-    ArrayList<Task> getTasks();
-
-    ArrayList<SubTask> getSubTasks();
-
-    ArrayList<SubTask> getSubTasksById(Integer subTaskId);
-
-    ArrayList<Task> getEpicTasks();
 
     Task getTask(Integer taskId);
 
@@ -42,5 +28,5 @@ public interface TaskManager{
 
     Task getSubTask(Integer taskId);
 
-
+    void deleteAllTasks();
 }

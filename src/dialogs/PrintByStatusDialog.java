@@ -38,7 +38,9 @@ public class PrintByStatusDialog extends JDialog {
     }
 
     public Status getStatus() {
-        if(textField1.getText().equals("NEW") || textField1.getText().equals("IN_PROGRESS") || textField1.getText().equals("DONE")){
+        if(textField1.getText().equals("NEW")
+                || textField1.getText().equals("IN_PROGRESS")
+                || textField1.getText().equals("DONE")){
             Status status = Status.valueOf(textField1.getText());
             dispose();
             return status;
@@ -50,7 +52,6 @@ public class PrintByStatusDialog extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
