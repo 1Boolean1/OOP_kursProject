@@ -128,12 +128,10 @@ public class MainDialog extends JDialog {
         PrintByStatusDialog dialog = new PrintByStatusDialog();
         dialog.setVisible(true);
         DefaultListModel<Task> listModelByStatus = new DefaultListModel<>();
-        if (dialog.getStatus() == null) {
-            printList();
-        } else {
+        if (dialog.getStatus() != null) {
             listModelByStatus.addAll(taskManager.printTasksByStatus(dialog.getStatus()));
+            listTask.setModel(listModelByStatus);
         }
-        listTask.setModel(listModelByStatus);
     }
 
     private void printAllTasks() {
