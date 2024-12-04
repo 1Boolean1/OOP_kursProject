@@ -41,10 +41,10 @@ public class EpicTask extends Task implements Serializable{
 
     @Override
     public String toString() {
-        return "<html>EpicTaskID: " + getTaskId() +
-                "&emsp &ensp Name: " + getTaskName() +
-                "&emsp &ensp Description: " + getTaskDescription() +
-                "&emsp &ensp Status: " + getTaskStatus() +
+        return "<html>ID эпик задачи: " + getTaskId() +
+                "&emsp &ensp Имя: " + getTaskName() +
+                "&emsp &ensp Описание: " + getTaskDescription() +
+                "&emsp &ensp Статус: " + getTaskStatus() +
                  getSubTasksToPrint() +
                 "</html>";
     }

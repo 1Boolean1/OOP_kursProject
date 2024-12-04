@@ -38,10 +38,10 @@ public class PrintByStatusDialog extends JDialog {
     }
 
     public Status getStatus() {
-        if(textField1.getText().equals("NEW")
-                || textField1.getText().equals("IN_PROGRESS")
-                || textField1.getText().equals("DONE")){
-            Status status = Status.valueOf(textField1.getText());
+        if(textField1.getText().equalsIgnoreCase("NEW")
+                || textField1.getText().equalsIgnoreCase("IN_PROGRESS")
+                || textField1.getText().equalsIgnoreCase("DONE")){
+            Status status = Status.valueOf(textField1.getText().toUpperCase());
             dispose();
             return status;
         }

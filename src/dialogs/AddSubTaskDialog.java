@@ -62,16 +62,20 @@ public class AddSubTaskDialog extends JDialog {
         return isDigit;
     }
 
+    private String deleteSpace(String string){
+        return string.trim();
+    }
+
     public SubTask addSubTask() {
+        String name = deleteSpace(textFieldName.getText());
+        String description = deleteSpace(textFieldDescription.getText());
         if (checkInput()) {
-            if (textFieldName.getText().isEmpty()) {
+            if (name.isEmpty()) {
                 hideAllAndStartTimer("Введите имя задачи!");
                 return null;
             } else {
-                String taskName = textFieldName.getText();
-                String taskDescription = textFieldDescription.getText();
-                hideAllAndStartTimer("Подзадача " + taskName + " успешно добавлена");
-                return new SubTask(taskName, taskDescription);
+                hideAllAndStartTimer("Подзадача " + name + " успешно добавлена");
+                return new SubTask(name, description);
             }
         }
         return null;

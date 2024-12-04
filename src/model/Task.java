@@ -36,10 +36,10 @@ public class Task implements Serializable{
 
     @Override
     public String toString() {
-        return "<html>TaskId: " + taskId +
-                "&emsp &ensp Name: " + taskName +
-                "&emsp &ensp Description: " + taskDescription +
-                "&emsp &ensp Status: " + taskStatus +
+        return "<html>Id задачи: " + taskId +
+                "&emsp &ensp Имя: " + taskName +
+                "&emsp &ensp Описание: " + taskDescription +
+                "&emsp &ensp Статус: " + taskStatus +
                 "<br></html>";
     }
 

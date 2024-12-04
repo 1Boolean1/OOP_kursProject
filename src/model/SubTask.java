@@ -24,9 +24,9 @@ public class SubTask extends Task implements Serializable {
 
     @Override
     public String toString() {
-        return "<br>---->SubTaskId: " + getTaskId() +
-                "&emsp &ensp Name: " + getTaskName() +
-                "&emsp &ensp Description: " + getTaskDescription() +
-                "&emsp &ensp Status: " + getTaskStatus();
+        return "<br>---->Id подзадачи: " + getTaskId() +
+                "&emsp &ensp Имя: " + getTaskName() +
+                "&emsp &ensp Описание: " + getTaskDescription() +
+                "&emsp &ensp Статус: " + getTaskStatus();
     }
 }

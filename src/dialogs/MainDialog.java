@@ -16,7 +16,7 @@ public class MainDialog extends JDialog {
     private JButton deleteTaskButton;
     private JButton addNewTaskButton;
     private JButton addNewSubTaskButton;
-    private final DefaultListModel<Task> listModelTask = new DefaultListModel<>();
+    private DefaultListModel<Task> listModelTask = new DefaultListModel<>();
     private JList<Task> listTask;
     private JButton printTasksByStatusButton;
     private JButton addNewEpicTaskButton;
@@ -88,7 +88,7 @@ public class MainDialog extends JDialog {
     private void onAddTask() {
         AddTaskDialog addTaskDialog = new AddTaskDialog();
         addTaskDialog.setVisible(true);
-        if (!addTaskDialog.getTask(false).getTaskName().isEmpty()){
+        if (!addTaskDialog.getTask(false).getTaskName().isEmpty()) {
             taskManager.addNewTask(addTaskDialog.getTask(false));
         }
         printList();
@@ -128,7 +128,11 @@ public class MainDialog extends JDialog {
         PrintByStatusDialog dialog = new PrintByStatusDialog();
         dialog.setVisible(true);
         DefaultListModel<Task> listModelByStatus = new DefaultListModel<>();
-        listModelByStatus.addAll(taskManager.printTasksByStatus(dialog.getStatus()));
+        if (dialog.getStatus() == null) {
+            printList();
+        } else {
+            listModelByStatus.addAll(taskManager.printTasksByStatus(dialog.getStatus()));
+        }
         listTask.setModel(listModelByStatus);
     }
 

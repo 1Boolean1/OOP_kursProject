@@ -43,12 +43,18 @@ public class AddTaskDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    private String deleteSpace(String string) {
+        return string.trim();
+    }
+
     public void addTask() {
-        if(textFieldAddTaskName.getText().isEmpty()){
+        String name = deleteSpace(textFieldAddTaskName.getText());
+        String description = deleteSpace(textFieldAddTaskDescription.getText());
+        if (name.isEmpty()) {
             hideAllAndStartTimer("Введите имя задачи!");
         } else {
-            taskName = textFieldAddTaskName.getText();
-            taskDescription = textFieldAddTaskDescription.getText();
+            taskName = name;
+            taskDescription = description;
             hideAllAndStartTimer("Задача " + taskName + " успешно добавлена!");
         }
     }
@@ -69,7 +75,7 @@ public class AddTaskDialog extends JDialog {
         dispose();
     }
 
-    private void hideAllAndStartTimer(String setText){
+    private void hideAllAndStartTimer(String setText) {
         textFieldAddTaskDescription.setVisible(false);
         textFieldAddTaskName.setVisible(false);
         labelAddTaskDescription.setText(setText);
